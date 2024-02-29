@@ -13,9 +13,9 @@ pipeline{
         stage('analisis de codigo con sonarqube'){
             steps{
                 script {
-                    def scannerHome = tool 'SonarQube Scanner';
+                    def scannerHome = tool 'SonarScanner 4.0';
                     withSonarQubeEnv('sonarqube') {
-                        sh "home/danv/jenkinsNode/sonar-scanner"
+                        sh "${scannerHome}/bin/sonar-scanner"
                     }
                 }
             }
