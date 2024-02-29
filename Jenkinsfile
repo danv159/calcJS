@@ -13,7 +13,7 @@ pipeline{
         stage('analisis de codigo con sonarqube'){
             steps{
                 script {
-                    def scannerHome = tool 'SonarScanner 4.0';
+                    def scannerHome = tool 'SonarQube Scanner 5.0.1.3006 ';
                     withSonarQubeEnv('sonarqube') {
                         sh "${scannerHome}/bin/sonar-scanner"
                     }
