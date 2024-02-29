@@ -29,11 +29,11 @@ pipeline{
                 )])
                 {
                     script{
-                        docker build -t calcjs:1.0 .;
-                        docker run -d --name calcjs -p3000:3000 calcjs:1.0;
-                        echo "$tokendocker" | docker login -u danv159 --password-stdin;
-                        docker tag calcjs:1.0 danv159/calcjs:1.0;
-                        docker push danv159/calcjs:1.0;
+                        sh "docker build -t calcjs:1.0 .";
+                        sh "docker run -d --name calcjs -p3000:3000 calcjs:1.0";
+                        sh "echo "$tokendocker" | docker login -u danv159 --password-stdin";
+                        sh "docker tag calcjs:1.0 danv159/calcjs:1.0";
+                        sh "docker push danv159/calcjs:1.0";
                     }
                 }
             }
