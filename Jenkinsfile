@@ -1,6 +1,6 @@
 pipeline{
     agent{
-        label 'virtualAgeticDAN'
+        'virtualAgeticDAN'
     }
     // parameters{
 
@@ -15,7 +15,7 @@ pipeline{
                 script {
                     def scannerHome = tool 'SonarQube Scanner';
                     withSonarQubeEnv('sonarqube') {
-                        sh "${scannerHome}/bin/sonar-scanner"
+                        sh "home/danv/jenkinsNode/sonar-scanner"
                     }
                 }
             }
