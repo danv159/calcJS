@@ -1,6 +1,6 @@
 pipeline{
     agent{
-        label {'virtualAgeticDAN'}
+        label 'virtualAgeticDAN'
     }
     // parameters{
 
