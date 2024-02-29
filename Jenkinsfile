@@ -11,12 +11,11 @@ pipeline{
     stages{
         
         stage('analisis de codigo con sonarqube'){
+            
+            def scannerHome = tool 'SonarScanner';
             steps{
-                script {
-                    def scannerHome = tool 'SonarQube Scanner 5.0.1.3006 ';
-                    withSonarQubeEnv('sonarqube') {
+                withSonarQubeEnv('sonarqube') {
                         sh "${scannerHome}/bin/sonar-scanner"
-                    }
                 }
             }
         }
