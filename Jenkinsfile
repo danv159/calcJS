@@ -20,7 +20,7 @@ pipeline{
                         -D.sonar.projectName=analisis_construccion \
                         -D.sonar.projectVersion=1.0 \
                         -D.sonar.sources=/home/danv/jenkinsNode/workspace/analisis_construccion \
-                        -D.sonar.language=java script \
+                        -D.sonar.language=java \
                         -D.sonar.sourceEnconding=UTF-8 
                         """
                         
