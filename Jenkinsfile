@@ -16,7 +16,13 @@ pipeline{
                     def scannerHome = tool 'sonarqube';
                     
                     withSonarQubeEnv('sonarqube') {
-                        sh "${scannerHome}/bin/sonar-scanner"
+                        sh "${scannerHome}/bin/sonar-scanner" -D.sonar.projectKey=analisis_construccion \
+                        -D.sonar.projectName=analisis_construccion \
+                        -D.sonar.projectVersion=1.0 \
+                        -D.sonar.sources=/home/danv/jenkinsNode/workspace/analisis_construccion \
+                        -D.sonar.language=java script \
+                        -D.sonar.sourceEnconding=UTF-8 
+                        
                     }
                 }
             }
