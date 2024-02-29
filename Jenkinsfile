@@ -17,12 +17,12 @@ pipeline{
                     
                     withSonarQubeEnv('sonarqube') {
                         sh """${scannerHome}/bin/sonar-scanner \
-                            -D.sonar.projectKey=analisis_construccion \
-                            -D.sonar.projectName=analisis_construccion \
-                            -D.sonar.projectVersion=1.0 \
-                            -D.sonar.sources=/home/danv/jenkinsNode/workspace/analisis_construccion \
-                            -D.sonar.language=java \
-                            -D.sonar.sourceEncoding=UTF-8
+                            -Dsonar.projectKey=analisis_construccion \
+                            -Dsonar.projectName=analisis_construccion \
+                            -Dsonar.projectVersion=1.0 \
+                            -Dsonar.sources=/home/danv/jenkinsNode/workspace/analisis_construccion \
+                            -Dsonar.language=javascript \
+                            -Dsonar.sourceEncoding=UTF-8
                         """
                     }
                 }
