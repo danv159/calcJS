@@ -33,7 +33,7 @@ pipeline{
             steps{
                              
                 withCredentials([string(
-                    credentialesId:'dockerhubTOKEN',
+                    credentialsId:'dockerhubTOKEN',
                     variable:'tokendocker'
                 )])
                 {
