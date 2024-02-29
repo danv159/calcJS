@@ -1,3 +1,15 @@
+//para hacer el commit status
+void setBuildStatus(String message, String state) {
+  step([
+      $class: "GitHubCommitStatusSetter",
+      reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/danv159/calcJS"],
+      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "ci/jenkins/build-status"],
+      errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
+      statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
+  ]);
+}
+
+
 pipeline{
     agent{
         label 'virtualAgeticDAN'
@@ -11,7 +23,7 @@ pipeline{
     stages{
         
         
-        stage('build'){
+        /*stage('build'){
             steps{
                              
                 withCredentials([string(
@@ -28,7 +40,7 @@ pipeline{
                     }
                 }
             }
-        }
+        }*/
         stage('analisis de codigo con sonarqube'){
             steps{
                 script{
@@ -48,19 +60,14 @@ pipeline{
             }
             
         }
-        stage('commit status a github'){
-            steps{
-                setBuildStatus("Compiling", "compile", "pending");
-                script {
-                    try {
-                        // do the build here
-                        setBuildStatus("Build complete", "compile", "success");
-                    } catch (err) {
-                        setBuildStatus("Failed", "pl-compile", "failure");
-                        throw err
-                    }
-                }
-            }
-        }
+        
     }
+    post {
+    success {
+        setBuildStatus("Build succeeded", "SUCCESS");
+    }
+    failure {
+        setBuildStatus("Build failed", "FAILURE");
+    }
+  }
 }
