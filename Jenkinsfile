@@ -37,7 +37,6 @@ pipeline{
                             -Dsonar.sources=/home/danv/jenkinsNode/workspace/analisis_construccion \
                             -Dsonar.language=javascript \
                             -Dsonar.sourceEncoding=UTF-8 \
-                            -Dsonar.analysis.mode=preview \
                             -Dsonar.report.export.path=/home/danv/jenkinsNode/workspace/analisis_construccion/sonar-report.pdf
                         """
                     }
