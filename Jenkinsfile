@@ -51,7 +51,10 @@ pipeline{
                 script {
                     emailext body: 'Adjunto el reporte de SonarQube generado',
                              subject: 'Reporte de SonarQube',
-                             attachmentsPattern: 'sonar-report.pdf', // Ruta al reporte de SonarQube generado en TXT
+                             mimeType: 'text/html',
+                             attachLog: true,
+                             compressLog: true,
+                             attachmentsPattern: 'test.zip',
                              to: 'danielmundero123@gmail.com'
                 }
             }
