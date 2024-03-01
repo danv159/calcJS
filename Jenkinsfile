@@ -37,8 +37,8 @@ pipeline{
                             -Dsonar.sources=/home/danv/jenkinsNode/workspace/analisis_construccion \
                             -Dsonar.language=javascript \
                             -Dsonar.sourceEncoding=UTF-8 \
-                            -Dsonar.report.export.path=./sonar-report.txt \
-                            -Dsonar.report.export.format=text
+                            -Dsonar.analysis.mode=preview \
+                            -Dsonar.report.export.path=/home/danv/jenkinsNode/workspace/analisis_construccion/sonar-report.pdf
                         """
                     }
                 }
@@ -48,10 +48,11 @@ pipeline{
 
         stage('Send Email') {
             steps {
+               
                 script {
                     emailext body: 'Adjunto el reporte de SonarQube generado',
                              subject: 'Reporte de SonarQube',
-                             attachmentsPattern: './sonar-report.txt', // Ruta al reporte de SonarQube generado en TXT
+                             attachmentsPattern: '/home/danv/jenkinsNode/workspace/analisis_construccion/sonar-report.pdf', // Ruta al reporte de SonarQube generado en TXT
                              to: 'danielmundero123@gmail.com'
                 }
             }
