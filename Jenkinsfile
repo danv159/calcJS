@@ -36,7 +36,9 @@ pipeline{
                             -Dsonar.projectVersion=1.0 \
                             -Dsonar.sources=/home/danv/jenkinsNode/workspace/analisis_construccion \
                             -Dsonar.language=javascript \
-                            -Dsonar.sourceEncoding=UTF-8
+                            -Dsonar.sourceEncoding=UTF-8 \
+                            -Dsonar.report.export.path=./sonar-report.txt \
+                            -Dsonar.report.export.format=text
                         """
                     }
                 }
@@ -44,7 +46,18 @@ pipeline{
             
         }
 
-        stage('build'){
+        stage('Send Email') {
+            steps {
+                script {
+                    emailext body: 'Adjunto el reporte de SonarQube generado',
+                             subject: 'Reporte de SonarQube',
+                             attachmentsPattern: './sonar-report.txt', // Ruta al reporte de SonarQube generado en TXT
+                             to: 'danielmundero123@gmail.com
+                }
+            }
+        }
+
+        /*stage('build'){
               steps{
                                
                   withCredentials([string(
@@ -63,7 +76,7 @@ pipeline{
               }
         }
         
-    }
+    }*/
     post {
     success {
         setBuildStatus("Build succeeded", "SUCCESS");
