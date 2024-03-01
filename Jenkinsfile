@@ -52,7 +52,7 @@ pipeline{
                     emailext body: 'Adjunto el reporte de SonarQube generado',
                              subject: 'Reporte de SonarQube',
                              attachmentsPattern: './sonar-report.txt', // Ruta al reporte de SonarQube generado en TXT
-                             to: 'danielmundero123@gmail.com
+                             to: 'danielmundero123@gmail.com'
                 }
             }
         }
