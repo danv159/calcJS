@@ -24,7 +24,7 @@ pipeline{
         
         
         
-        stage('analisis de codigo con sonarqube'){
+        /*stage('analisis de codigo con sonarqube'){
             steps{
                 script{
                     def scannerHome = tool 'sonarqube';
@@ -43,7 +43,7 @@ pipeline{
                 }
             }
             
-        }
+        }*/
 
         stage('Send Email') {
             steps {
@@ -51,7 +51,7 @@ pipeline{
                 script {
                     emailext body: 'Adjunto el reporte de SonarQube generado',
                              subject: 'Reporte de SonarQube',
-                             attachmentsPattern: 'sonar-report.pdf', // Ruta al reporte de SonarQube generado en TXT
+                             attachmentsPattern: 'file.pdf', // Ruta al reporte de SonarQube generado en TXT
                              to: 'danielmundero123@gmail.com'
                 }
             }
