@@ -60,7 +60,7 @@ pipeline{
             }
         }
 
-        /*stage('build'){
+        stage('build'){
               steps{
                                
                   withCredentials([string(
@@ -77,7 +77,7 @@ pipeline{
                       }
                   }
               }
-        }*/
+        }
         
     }
     post {
