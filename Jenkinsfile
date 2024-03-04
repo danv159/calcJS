@@ -45,12 +45,30 @@ pipeline{
             
         }
 
-        stage("Quality Gate") {
-            steps {  
-                 waitForQualityGate abortPipeline: true
-            }
-        }
+        
 
+        stage("Quality Gate") {
+            
+              steps {
+                script{
+                  try{
+                       timeout(time: 10, unit: 'MINUTES') {
+                          waitForQualityGate abortPipeline: true
+                      }
+                  } catch(err){
+                      emailext body: 'Adjunto el reporte de SonarQube generado',
+                               subject: 'Reporte de SonarQube, error',
+                               mimeType: 'text/html',
+                               attachLog: true,
+                               compressLog: true,
+                               attachmentsPattern: 'test.zip',
+                               to: 'danielmundero123@gmail.com'
+                    
+                  }
+                }
+              }
+            
+        }
         stage('Send Email') {
             steps {
                
@@ -65,6 +83,7 @@ pipeline{
                 }
             }
         }
+        
 
         /*stage('build'){
               steps{
