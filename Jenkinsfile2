@@ -120,7 +120,7 @@ pipeline {
            steps{
                 sh "docker run -d --name nombre -p3000:3000 calcJS:1.0";
               }
-        }*/
+        }
     }
     
     post {
