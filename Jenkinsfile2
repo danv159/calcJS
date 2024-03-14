@@ -46,7 +46,7 @@ pipeline {
                 }
             }
         }
-        /*stage('quality gate') {
+        stage('quality gate') {
         agent{
             label 'virtualAgeticDAN'
         }
@@ -68,7 +68,7 @@ pipeline {
                   }
                 }
             }
-        }*/
+        }
         stage('Send Email') {
         agent{
             label 'virtualAgeticDAN'
