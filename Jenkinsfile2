@@ -21,8 +21,8 @@ pipeline {
         }
             steps {
                 sh "echo 'pasos-ansible'"
-                //sh "ansible-playbook -i /var/lib/jenkins/ansible-projects/tarea3/ansible2/inventory.ini /var/lib/jenkins/ansible-projects/tarea3/ansible2/playbook.yml -vv"
-                //sh "ansible-playbook -i /var/lib/jenkins/ansible-projects/tarea3/ansible2/inventory.ini /var/lib/jenkins/ansible-projects/tarea3/ansible2/playbook2.yml -vv"
+                //sh "echo -n pass13 | ansible-playbook -i /var/lib/jenkins/ansible-projects/tarea3/ansible2/inventory.ini /var/lib/jenkins/ansible-projects/tarea3/ansible2/playbook.yml -K -vv"
+                //sh "echo -n pass13 | ansible-playbook -i /var/lib/jenkins/ansible-projects/tarea3/ansible2/inventory.ini /var/lib/jenkins/ansible-projects/tarea3/ansible2/playbook2.yml -K -vv"
             }
         }
         stage('analisis') {
@@ -38,7 +38,7 @@ pipeline {
                             -Dsonar.projectKey=pipeline_ansible \
                             -Dsonar.projectName=pipeline_ansible \
                             -Dsonar.projectVersion=1.0 \
-                            -Dsonar.sources=/home/danv/jenkinsNode/workspace/pipeline_ansible@2 \
+                            -Dsonar.sources=/home/danv/jenkinsNode/workspace/pipeline_ansible \
                             -Dsonar.language=javascript \
                             -Dsonar.sourceEncoding=UTF-8 \
                             -Dsonar.report.export.path=/home/danv/jenkinsNode/workspace/pipeline_ansible/sonar-report.pdf
