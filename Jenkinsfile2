@@ -69,7 +69,7 @@ pipeline {
                 }
             }
         }
-        /*stage('Send Email') {
+        stage('Send Email') {
         agent{
             label 'virtualAgeticDAN'
         }
@@ -91,7 +91,7 @@ pipeline {
             label 'virtualAgeticDAN'
         }
             steps{
-                  sh "docker build -t nombre:1.0 .";
+                  sh "docker build -t calcJS:1.0 .";
             }
         }
         stage('push') {
@@ -107,8 +107,8 @@ pipeline {
                   {
                       script{
                           sh "echo $tokendocker | docker login -u danv159 --password-stdin";
-                          sh "docker tag nombre:1.0 danv159/nombre:1.0";
-                          sh "docker push danv159/nombre:1.0";
+                          sh "docker tag calcJS:1.0 danv159/calcJS:1.0";
+                          sh "docker push danv159/calcJS:1.0";
                       }
                   }
             }
@@ -118,12 +118,12 @@ pipeline {
             label 'virtualAgeticDAN'
         }
            steps{
-                sh "docker run -d --name nombre -p3000:3000 nombre:1.0";
+                sh "docker run -d --name nombre -p3000:3000 calcJS:1.0";
               }
         }*/
     }
     
-    /*post {
+    post {
     
         success {
             setBuildStatus("Build succeeded", "SUCCESS");
@@ -131,5 +131,5 @@ pipeline {
         failure {
             setBuildStatus("Build failed", "FAILURE");
         }
-    }*/
+    }
 }
