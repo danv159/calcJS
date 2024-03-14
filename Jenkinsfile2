@@ -38,7 +38,7 @@ pipeline {
                             -Dsonar.projectKey=pipeline_ansible \
                             -Dsonar.projectName=pipeline_ansible \
                             -Dsonar.projectVersion=1.0 \
-                            -Dsonar.sources=/home/danv/jenkinsNode/workspace/pipeline_ansible \
+                            -Dsonar.sources=/home/danv/jenkinsNode/workspace/pipeline_ansible@2 \
                             -Dsonar.language=javascript \
                             -Dsonar.sourceEncoding=UTF-8 \
                             -Dsonar.report.export.path=/home/danv/jenkinsNode/workspace/pipeline_ansible/sonar-report.pdf
