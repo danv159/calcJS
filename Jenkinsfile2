@@ -20,8 +20,8 @@ pipeline {
             label 'principal'
         }
             steps {
-                sh "echo -n pass13 | ansible-playbook -i /var/lib/jenkins/ansible-projects/tarea3/ansible2/inventory.ini /var/lib/jenkins/ansible-projects/tarea3/ansible2/playbook.yml -K -vv"
-                sh "echo -n pass13 | ansible-playbook -i /var/lib/jenkins/ansible-projects/tarea3/ansible2/inventory.ini /var/lib/jenkins/ansible-projects/tarea3/ansible2/playbook2.yml -K -vv"
+                sh "ansible-playbook -i /var/lib/jenkins/ansible-projects/tarea3/ansible2/inventory.ini /var/lib/jenkins/ansible-projects/tarea3/ansible2/playbook.yml -vv"
+                sh "ansible-playbook -i /var/lib/jenkins/ansible-projects/tarea3/ansible2/inventory.ini /var/lib/jenkins/ansible-projects/tarea3/ansible2/playbook2.yml -vv"
             }
         }
         stage('analisis') {
