@@ -1,0 +1,135 @@
+//para hacer el commit status
+void setBuildStatus(String message, String state) {
+  step([
+      $class: "GitHubCommitStatusSetter",
+      reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/danv159/calcJS"],
+      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "ci/jenkins/build-status"],
+      errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
+      statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
+  ]);
+}
+
+pipeline {
+    agent{
+        label 'virtualAgeticDAN'
+    }
+
+    stages {
+        stage('aprovisionamiento') {
+        agent{
+            label 'principal'
+        }
+            steps {
+                sh "echo -n pass13 | ansible-playbook -i /var/lib/jenkins/ansible-projects/tarea3/ansible2/inventory.ini /var/lib/jenkins/ansible-projects/tarea3/ansible2/playbook.yml -K -vv"
+                sh "echo -n pass13 | ansible-playbook -i /var/lib/jenkins/ansible-projects/tarea3/ansible2/inventory.ini /var/lib/jenkins/ansible-projects/tarea3/ansible2/playbook2.yml -K -vv"
+            }
+        }
+        stage('analisis') {
+        agent{
+            label 'virtualAgeticDAN'
+        }
+            steps{
+                script{
+                    def scannerHome = tool 'sonarqube';
+                    
+                    withSonarQubeEnv('sonarqube') {
+                        sh """${scannerHome}/bin/sonar-scanner \
+                            -Dsonar.projectKey=pipeline_ansible \
+                            -Dsonar.projectName=pipeline_ansible \
+                            -Dsonar.projectVersion=1.0 \
+                            -Dsonar.sources=/home/danv/jenkinsNode/workspace/pipeline_ansible \
+                            -Dsonar.language=javascript \
+                            -Dsonar.sourceEncoding=UTF-8 \
+                            -Dsonar.report.export.path=/home/danv/jenkinsNode/workspace/pipeline_ansible/sonar-report.pdf
+                        """
+                    }
+                }
+            }
+        }
+        stage('quality gate') {
+        agent{
+            label 'virtualAgeticDAN'
+        }
+            steps {
+                script{
+                  try{
+                       timeout(time: 10, unit: 'MINUTES') {
+                          waitForQualityGate abortPipeline: true
+                      }
+                  } catch(err){
+                      /*emailext body: 'Adjunto el reporte de SonarQube generado',
+                               subject: 'Reporte de SonarQube, error',
+                               mimeType: 'text/html',
+                               attachLog: true,
+                               compressLog: true,
+                               attachmentsPattern: 'test.zip',
+                               to: 'danielmundero123@gmail.com'*/
+                    
+                  }
+                }
+            }
+        }
+        /*stage('Send Email') {
+        agent{
+            label 'virtualAgeticDAN'
+        }
+            steps {
+               
+                script {
+                    emailext body: 'Adjunto el reporte de SonarQube generado',
+                             subject: 'Reporte de SonarQube',
+                             mimeType: 'text/html',
+                             attachLog: true,
+                             compressLog: true,
+                             attachmentsPattern: 'test.zip',
+                             to: 'danielmundero123@gmail.com'
+                }
+            }
+        }
+        stage('build') {
+        agent{
+            label 'virtualAgeticDAN'
+        }
+            steps{
+                  sh "docker build -t nombre:1.0 .";
+            }
+        }
+        stage('push') {
+        agent{
+            label 'virtualAgeticDAN'
+        }
+            steps{
+                               
+                  withCredentials([string(
+                      credentialsId:'dockerhubTOKEN',
+                      variable:'tokendocker'
+                  )])
+                  {
+                      script{
+                          sh "echo $tokendocker | docker login -u danv159 --password-stdin";
+                          sh "docker tag nombre:1.0 danv159/nombre:1.0";
+                          sh "docker push danv159/nombre:1.0";
+                      }
+                  }
+            }
+        }
+        stage('despliegue') {
+        agent{
+            label 'virtualAgeticDAN'
+        }
+           steps{
+                sh "docker run -d --name nombre -p3000:3000 nombre:1.0";
+              }
+        }*/
+    }
+    
+    /*post {
+    
+        success {
+            setBuildStatus("Build succeeded", "SUCCESS");
+        }
+        failure {
+            setBuildStatus("Build failed", "FAILURE");
+        }
+    }*/
+}
